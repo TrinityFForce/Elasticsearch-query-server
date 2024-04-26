@@ -6,8 +6,10 @@ import lombok.RequiredArgsConstructor;
 import me.trinityfforce.esqueryserver.dto.ItemResponseDto;
 import me.trinityfforce.esqueryserver.entity.Item;
 import me.trinityfforce.esqueryserver.service.SearchService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,23 +23,24 @@ public class SearchController {
     private final SearchService searchService;
 
     @GetMapping("search/{keyword}")
-    List<Item> fuzzySearch(@PathVariable String keyword) throws IOException {
-        SearchResponse<Item> searchResponse = searchService.fuzzySearch(keyword);
-        List<Hit<Item>> hitList = searchResponse.hits().hits();
-        List<Item> itemList = new ArrayList<>();
-        for(Hit<Item> hit : hitList) {
+    List<ItemResponseDto> fuzzySearch(@PathVariable String keyword) throws IOException {
+        SearchResponse<Object> searchResponse = searchService.fuzzySearch(keyword);
+        List<Hit<Object>> hitList = searchResponse.hits().hits();
+        List<Object> itemList = new ArrayList<>();
+        for(Hit<Object> hit : hitList) {
             itemList.add(hit.source());
         }
-        return itemList;
+        List<ItemResponseDto> responseDtoList = new ArrayList<>();
+        for (Object obj : itemList) {
+            ItemResponseDto dto = new ItemResponseDto();
+            dto.mapToItemResponseDto(obj);
+            responseDtoList.add(dto);
+        }
+        return responseDtoList;
     }
 
     @GetMapping("/findAll")
     Iterable<Item> findAll() {
         return searchService.findAll();
     }
-
-//    @PostMapping("/insert")
-//    public Item insertItem(@RequestBody Item item) {
-//        return
-//    }
 }

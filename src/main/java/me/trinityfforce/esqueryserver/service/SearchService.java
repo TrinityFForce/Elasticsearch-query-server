@@ -19,10 +19,10 @@ public class SearchService {
 
     private final SearchRepository searchRepository;
     private final ElasticsearchClient elasticsearchClient;
-    public SearchResponse<Item> fuzzySearch(String keyword) throws IOException {
+    public SearchResponse<Object> fuzzySearch(String keyword) throws IOException {
         Supplier<Query> supplier = ElasticsearchUtil.createSupplierQuery(keyword);
-        SearchResponse<Item> response = elasticsearchClient
-            .search(s->s.index("sagopalgo.item").query(supplier.get()), Item.class);
+        SearchResponse<Object> response = elasticsearchClient
+            .search(s->s.index("sagopalgo.item").query(supplier.get()), Object.class);
         return response;
     }
 
