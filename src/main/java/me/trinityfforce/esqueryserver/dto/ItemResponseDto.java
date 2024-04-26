@@ -31,7 +31,7 @@ public class ItemResponseDto {
         this.name = node.get("class").get("name").asText();
         this.bidCount = node.get("class").get("bid_count").asInt();
         this.highestPrice = node.get("class").get("highest_price").asInt();
-        this.username = node.get("class").get("name").asText();
+        this.username = node.get("class").get("username").asText();
         this.status = node.get("class").get("status").asText();
         this.viewCount = node.get("class").get("view_count").asInt();
         this.url = node.get("class").get("url").asText();

@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import me.trinityfforce.esqueryserver.entity.Item;
 import me.trinityfforce.esqueryserver.repository.SearchRepository;
 import me.trinityfforce.esqueryserver.util.ElasticsearchUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
